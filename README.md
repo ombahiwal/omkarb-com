@@ -30,3 +30,9 @@ Open `http://localhost:5173` and iterate.
 - `public/documents/Omkar_Bahiwal_CV.pdf` — downloadable CV asset.
 
 Feel free to extend sections or wire a CMS by swapping `profile.js` with an API call.
+
+## 📣 Social Sharing
+
+- `netlify/functions/share-card.js` renders a 1200×630 PNG on-demand via Resvg. The `<meta property="og:image">` tag points at this endpoint so social networks fetch fresh artwork whenever `omkarb.com` links are shared.
+- Pass `?focus=1` (or any summary index) to emphasize a different summary line: `https://omkarb.com/.netlify/functions/share-card?focus=1`.
+- Update `index.html` if you deploy under a different domain so the `og:url` and image URLs stay accurate.
