@@ -166,7 +166,7 @@ export default function App() {
       const searchCursor = linkedSearch?.querySelector('.search-cursor');
       const nodes = linkedSearch ? Array.from(linkedSearch.querySelectorAll('.list-node')) : [];
 
-      if (linkedSearch && searchCursor && nodes.length > 0 && !window.matchMedia('(max-width: 700px)').matches) {
+      if (linkedSearch && searchCursor && nodes.length > 0 && !window.matchMedia('(max-width: 900px)').matches) {
         let linkedTl;
 
         const resetNodeStyle = {

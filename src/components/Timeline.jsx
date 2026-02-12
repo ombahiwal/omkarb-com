@@ -11,9 +11,8 @@ export function Timeline({ items }) {
             <div className="timeline-meta">{item.location}</div>
           </div>
           <div className="timeline-body">
-            <h3>
-              {item.role} · {item.company}
-            </h3>
+            <h3>{item.role}</h3>
+            <p className="timeline-company">{item.company}</p>
             <p>{item.impact}</p>
             <div className="badge-row timeline-tags">
               {item.keywords.map((keyword) => (

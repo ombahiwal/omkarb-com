@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 export function Footer({ profile }) {
   return (
-    <footer className="footer js-reveal">
+    <footer className="footer">
       <h2 className="footer-title">Get in Touch</h2>
 
       <div className="linked-search">
