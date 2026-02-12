@@ -6,8 +6,8 @@ export function Associations({ items }) {
       {items.map((assoc) => (
         <article key={assoc.group} className="card">
           <h3>{assoc.group}</h3>
-          <p style={{ margin: '0.2rem 0', fontWeight: 600 }}>{assoc.role}</p>
-          <p style={{ color: 'var(--muted)' }}>{assoc.contribution}</p>
+          <p className="association-role">{assoc.role}</p>
+          <p className="card-copy">{assoc.contribution}</p>
         </article>
       ))}
     </div>

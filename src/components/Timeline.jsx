@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 export function Timeline({ items }) {
   return (
     <div className="timeline">
+      <span className="timeline-progress" aria-hidden="true" />
       {items.map((item) => (
         <article key={`${item.role}-${item.company}`} className="timeline-item">
-          <div>
+          <div className="timeline-aside">
             <div className="timeline-meta">{item.period}</div>
             <div className="timeline-meta">{item.location}</div>
           </div>
-          <div>
+          <div className="timeline-body">
             <h3>
               {item.role} · {item.company}
             </h3>
             <p>{item.impact}</p>
-            <div className="badge-row" style={{ marginTop: '0.8rem' }}>
+            <div className="badge-row timeline-tags">
               {item.keywords.map((keyword) => (
                 <span key={keyword} className="badge">
                   {keyword}

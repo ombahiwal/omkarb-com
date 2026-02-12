@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 
 export function Stacks({ programming, languages }) {
   return (
-    <div className="grid-two">
+    <div className="stack-layout">
       <article className="card">
         <h3>Toolchain</h3>
-        <p style={{ color: 'var(--muted)', marginTop: '0.4rem' }}>The languages and runtimes I reach for first.</p>
-        <div className="badge-row" style={{ marginTop: '1rem' }}>
+        <p className="card-copy">Languages and runtimes I reach for first when building products end-to-end.</p>
+        <div className="badge-row card-badges">
           {programming.map((tech) => (
             <span key={tech} className="badge">
               {tech}
@@ -14,13 +14,14 @@ export function Stacks({ programming, languages }) {
           ))}
         </div>
       </article>
+
       <article className="card">
         <h3>Languages</h3>
-        <ul style={{ listStyle: 'none', padding: 0, margin: '0.8rem 0 0', display: 'grid', gap: '0.6rem' }}>
+        <ul className="language-list">
           {languages.map((lang) => (
-            <li key={lang.label} style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'JetBrains Mono, monospace' }}>
+            <li key={lang.label}>
               <span>{lang.label}</span>
-              <span style={{ color: 'var(--muted)' }}>{lang.level}</span>
+              <span>{lang.level}</span>
             </li>
           ))}
         </ul>

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-export function Section({ title, meta, children }) {
+export function Section({ title, meta, children, className = '' }) {
   return (
-    <section className="section">
+    <section className={`section js-reveal ${className}`.trim()}>
       <header className="section-header">
         <h2>{title}</h2>
         {meta && <span>{meta}</span>}
@@ -15,5 +15,6 @@ export function Section({ title, meta, children }) {
 Section.propTypes = {
   title: PropTypes.string.isRequired,
   meta: PropTypes.string,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string
 };
