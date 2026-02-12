@@ -18,6 +18,7 @@ export default function App() {
 
   useLayoutEffect(() => {
     let cleanupFooterAnimation = () => {};
+    let cleanupMasonry = () => {};
 
     const ctx = gsap.context(() => {
       gsap.from('.js-stagger', {
@@ -231,8 +232,51 @@ export default function App() {
       }
     }, shellRef);
 
+    const grid = shellRef.current?.querySelector('.layout-grid');
+    const gridItems = grid ? Array.from(grid.children) : [];
+
+    if (grid && gridItems.length > 0) {
+      const relayoutMasonry = () => {
+        if (!window.matchMedia('(min-width: 1081px)').matches) {
+          gridItems.forEach((item) => {
+            item.style.gridRowEnd = 'auto';
+          });
+          return;
+        }
+
+        const gridStyles = window.getComputedStyle(grid);
+        const autoRow = Number.parseFloat(gridStyles.getPropertyValue('grid-auto-rows')) || 8;
+        const rowGap = Number.parseFloat(gridStyles.getPropertyValue('row-gap')) || 16;
+
+        gridItems.forEach((item) => {
+          item.style.gridRowEnd = 'auto';
+        });
+
+        gridItems.forEach((item) => {
+          const height = item.getBoundingClientRect().height;
+          const span = Math.ceil((height + rowGap) / (autoRow + rowGap));
+          item.style.gridRowEnd = `span ${Math.max(1, span)}`;
+        });
+      };
+
+      relayoutMasonry();
+      const resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(relayoutMasonry);
+      });
+      gridItems.forEach((item) => resizeObserver.observe(item));
+      window.addEventListener('resize', relayoutMasonry);
+      const delayedRelayout = window.setTimeout(relayoutMasonry, 220);
+
+      cleanupMasonry = () => {
+        window.clearTimeout(delayedRelayout);
+        resizeObserver.disconnect();
+        window.removeEventListener('resize', relayoutMasonry);
+      };
+    }
+
     return () => {
       cleanupFooterAnimation();
+      cleanupMasonry();
       ctx.revert();
     };
   }, []);
@@ -242,29 +286,31 @@ export default function App() {
       <div className="layout-grid">
         <Hero profile={profile} />
 
-        <Section className="span-4" title="Stacks" meta="Tools I ship with">
-          <Stacks programming={profile.programming} languages={profile.languages} />
-        </Section>
-
-        <Section className="span-8" title="Education" meta="Computer science, service systems, and exchange research">
-          <Education items={profile.education} />
-        </Section>
-
-        <Section className="span-6" title="Awards" meta="National-stage recognition">
-          <Awards items={profile.awards} />
-        </Section>
-
-        <Section className="span-6" title="Communities" meta="Builder-led student initiatives">
-          <Associations items={profile.associations} />
-        </Section>
-
-        <Section className="span-12" title="Experience" meta="Research, product, and system delivery across Europe + India">
+        <Section className="span-8 section-experience" index="01" title="Experience" meta="Research, product, and system delivery across Europe + India">
           <Timeline items={profile.experience} />
         </Section>
 
-        <div className="span-12">
+        <Section className="span-4" index="02" title="Stacks" meta="Tools I ship with">
+          <Stacks programming={profile.programming} languages={profile.languages} />
+        </Section>
+
+        <Section className="span-4" index="03" title="Education" meta="Computer science, service systems, and exchange research">
+          <Education items={profile.education} />
+        </Section>
+
+        <Section className="span-4" index="04" title="Awards" meta="National-stage recognition">
+          <Awards items={profile.awards} />
+        </Section>
+
+        <Section className="span-4" index="05" title="Communities" meta="Builder-led student initiatives">
+          <Associations items={profile.associations} />
+        </Section>
+        <Section className="span-8" index="" title="" meta="contact">
           <Footer profile={profile} />
-        </div>
+        </Section>
+        {/* <div className="span-12">
+          <Footer profile={profile} />
+        </div> */}
       </div>
     </div>
   );
