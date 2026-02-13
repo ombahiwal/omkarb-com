@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import ConfettiExplosion from 'react-confetti-explosion';
 import useGameStore from '../store';
+import ThreeGardenBoard from './ThreeGardenBoard';
+
+const FINAL_HEART_BLOOM_TOTAL = 20;
 
 /* ── Staggered letter animation ── */
 function StaggerText({ text, className, delay = 0 }) {
@@ -61,12 +64,50 @@ function Countdown() {
 
 export default function FinalScreen() {
   const [showConfetti, setShowConfetti] = useState(true);
+  const [extraBloomCount, setExtraBloomCount] = useState(0);
   const resetGame = useGameStore((s) => s.resetGame);
+  const bloomedFlowers = useGameStore((s) => s.bloomedFlowers);
 
   useEffect(() => {
     const t = setTimeout(() => setShowConfetti(false), 5000);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    const remaining = Math.max(0, FINAL_HEART_BLOOM_TOTAL - bloomedFlowers.length);
+    if (remaining === 0) {
+      return undefined;
+    }
+
+    setExtraBloomCount(0);
+    const id = setInterval(() => {
+      setExtraBloomCount((prev) => {
+        if (prev >= remaining) {
+          clearInterval(id);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 300);
+
+    return () => clearInterval(id);
+  }, [bloomedFlowers.length]);
+
+  const finalBloomedFlowers = useMemo(() => {
+    if (bloomedFlowers.length >= FINAL_HEART_BLOOM_TOTAL) {
+      return bloomedFlowers.slice(0, FINAL_HEART_BLOOM_TOTAL);
+    }
+
+    const extrasToAdd = Math.max(0, Math.min(extraBloomCount, FINAL_HEART_BLOOM_TOTAL - bloomedFlowers.length));
+    const nextIdStart = bloomedFlowers.reduce((max, flower) => Math.max(max, flower.id), -1) + 1;
+    const extras = Array.from({ length: extrasToAdd }, (_, index) => ({
+      id: nextIdStart + index,
+      type: 'rose',
+      milestoneIndex: Math.min(FINAL_HEART_BLOOM_TOTAL - 1, bloomedFlowers.length + index),
+    }));
+
+    return [...bloomedFlowers, ...extras];
+  }, [bloomedFlowers, extraBloomCount]);
 
   return (
     <motion.div
@@ -86,6 +127,14 @@ export default function FinalScreen() {
           />
         </div>
       )}
+
+      <div className="final-garden-area">
+        <ThreeGardenBoard
+          bloomedFlowers={finalBloomedFlowers}
+          solvedCount={finalBloomedFlowers.length}
+          totalMilestones={FINAL_HEART_BLOOM_TOTAL}
+        />
+      </div>
 
       <div className="final-content">
         {/* Main heading */}
@@ -149,17 +198,17 @@ export default function FinalScreen() {
         >
           Text me when you finish ❤️
         </motion.a>
-
-        <motion.button
-          className="final-replay"
-          onClick={resetGame}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 4.5 }}
-        >
-          Play again 🌻
-        </motion.button>
       </div>
+
+      <motion.button
+        className="final-redo-mini"
+        onClick={resetGame}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 4.5 }}
+      >
+        Redo
+      </motion.button>
     </motion.div>
   );
 }

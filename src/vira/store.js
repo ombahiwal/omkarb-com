@@ -2,11 +2,57 @@ import { create } from 'zustand';
 import { milestones } from './data/milestones';
 
 const TOTAL = milestones.length;
+const COMPLETION_STORAGE_KEY = 'vira_journey_completion_v1';
+
+const readCompletionFromStorage = () => {
+  if (typeof window === 'undefined') {
+    return { completed: false, bloomedFlowers: [] };
+  }
+
+  try {
+    const raw = window.localStorage.getItem(COMPLETION_STORAGE_KEY);
+    if (!raw) {
+      return { completed: false, bloomedFlowers: [] };
+    }
+
+    const parsed = JSON.parse(raw);
+    const completed = Boolean(parsed?.completed);
+    const bloomedFlowers = Array.isArray(parsed?.bloomedFlowers) ? parsed.bloomedFlowers : [];
+    return { completed, bloomedFlowers };
+  } catch (_error) {
+    return { completed: false, bloomedFlowers: [] };
+  }
+};
+
+const writeCompletionToStorage = (completed, bloomedFlowers = []) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    if (!completed) {
+      window.localStorage.removeItem(COMPLETION_STORAGE_KEY);
+      return;
+    }
+
+    window.localStorage.setItem(
+      COMPLETION_STORAGE_KEY,
+      JSON.stringify({
+        completed: true,
+        bloomedFlowers,
+      }),
+    );
+  } catch (_error) {
+    // Ignore persistence failures.
+  }
+};
+
+const persistedCompletion = readCompletionFromStorage();
 
 const useGameStore = create((set, get) => ({
-  gameState: 'welcome',   // 'welcome' | 'playing' | 'final'
-  currentMilestone: 0,
-  bloomedFlowers: [],
+  gameState: persistedCompletion.completed ? 'final' : 'welcome',   // 'welcome' | 'playing' | 'final'
+  currentMilestone: persistedCompletion.completed ? TOTAL - 1 : 0,
+  bloomedFlowers: persistedCompletion.completed ? persistedCompletion.bloomedFlowers : [],
   pendingBloom: null,
   bloomSplash: {
     active: false,
@@ -55,6 +101,7 @@ const useGameStore = create((set, get) => ({
       const nextBloomedFlowers = s.pendingBloom
         ? [...s.bloomedFlowers, s.pendingBloom]
         : s.bloomedFlowers;
+      writeCompletionToStorage(true, nextBloomedFlowers);
       set({
         bloomedFlowers: nextBloomedFlowers,
         pendingBloom: null,
@@ -104,6 +151,7 @@ const useGameStore = create((set, get) => ({
   },
 
   resetGame: () =>
+    (writeCompletionToStorage(false),
     set({
       gameState: 'welcome',
       currentMilestone: 0,
@@ -114,7 +162,7 @@ const useGameStore = create((set, get) => ({
       showTimelineModal: false,
       currentModalData: null,
       puzzleShake: false,
-    }),
+    })),
 }));
 
 export { TOTAL };

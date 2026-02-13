@@ -21,21 +21,11 @@ const FLOWER_SHAPES = {
   poppy: { layers: [13, 10], radii: [0.17, 0.11] },
 };
 
-const FLOWER_GLTF_CANDIDATE_URLS = [
-  '/assets/Roses_in_Tivoli_Gardens.glb',
-  '/assets/Roses_in_Tivoli_Gardens.gltf',
-  '/assets/roses_in_tivoli_gardens.glb',
-  '/assets/roses_in_tivoli_gardens.gltf',
-];
+const FLOWER_GLTF_CANDIDATE_URLS = ['/assets/roses_in_tivoli_gardens.glb'];
 
-const GRASS_GLTF_CANDIDATE_URLS = [
-  '/assets/Patch_of_Grass.glb',
-  '/assets/Patch_of_Grass.gltf',
-  '/assets/patch_of_grass.glb',
-  '/assets/patch_of_grass.gltf',
-];
+const GRASS_GLTF_CANDIDATE_URLS = ['/assets/patch_of_grass.glb'];
 
-const HEDGEHOG_GLTF_CANDIDATE_URLS = ['/assets/hedgehog.glb', '/assets/hedgehog.gltf'];
+const HEDGEHOG_GLTF_CANDIDATE_URLS = ['/assets/hedgehog.glb'];
 
 const clamp01 = (value) => Math.max(0, Math.min(1, value));
 
@@ -337,7 +327,7 @@ const normalizeHedgehogModel = (model) => {
   }
 
   const maxDim = Math.max(size.x, size.y, size.z) || 1;
-  model.scale.setScalar(0.95 / maxDim);
+  model.scale.setScalar(1.45 / maxDim);
   model.rotation.y = -Math.PI / 2;
 
   model.traverse((child) => {
@@ -374,8 +364,8 @@ const createParametricRosePoints = (seed, palette) => {
   const positions = [];
   const radii = [];
 
-  const xCount = 16;
-  const thetaCount = 850;
+  const xCount = 18;
+  const thetaCount = 980;
   const thetaStart = -2 * Math.PI;
   const thetaEnd = 12 * Math.PI;
   const scale = 0.12 + rand() * 0.03;
@@ -663,7 +653,7 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
     let cancelled = false;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2('#3d1f42', 0.022);
+    scene.fog = new THREE.FogExp2('#2c0e16', 0.022);
 
     const camera = new THREE.PerspectiveCamera(46, 1, 0.1, 120);
     camera.position.set(0, 8.6, 10.8);
@@ -674,7 +664,7 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
       powerPreference: 'high-performance',
       precision: 'mediump',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 0.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 0.56));
     renderer.shadowMap.enabled = false;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NoToneMapping;
@@ -772,7 +762,7 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
     const milestoneNodes = [];
 
     const avatarGroup = new THREE.Group();
-    avatarGroup.position.set(pathPoints3D[0].x, 0.66 + terrainHeightAt(pathPoints3D[0].x, pathPoints3D[0].z), pathPoints3D[0].z);
+    avatarGroup.position.set(0, 0.42 + terrainHeightAt(0, 0), 0);
     boardGroup.add(avatarGroup);
 
     const flowersGroup = new THREE.Group();
@@ -798,8 +788,8 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
 
     const colorGrassLow = new THREE.Color('#4a7e50');
     const colorGrassHigh = new THREE.Color('#7bd17a');
-    const fogLow = new THREE.Color('#3d1f42');
-    const fogHigh = new THREE.Color('#8d5b84');
+    const fogLow = new THREE.Color('#2c0e16');
+    const fogHigh = new THREE.Color('#7a2f45');
 
     const state = {
       scene,
@@ -892,9 +882,14 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
           disposeObject3D(child);
         }
         const avatarHedgehog = hedgehogTemplate.clone(true);
-        avatarHedgehog.scale.multiplyScalar(0.62);
-        avatarHedgehog.position.y = -0.03;
+        avatarHedgehog.scale.multiplyScalar(1.0);
         avatarHedgehog.rotation.y = -Math.PI / 2;
+        const avatarBox = new THREE.Box3().setFromObject(avatarHedgehog);
+        const avatarCenter = avatarBox.getCenter(new THREE.Vector3());
+        avatarHedgehog.position.x -= avatarCenter.x;
+        avatarHedgehog.position.z -= avatarCenter.z;
+        avatarHedgehog.position.y -= avatarBox.min.y;
+        avatarHedgehog.position.y += 0.01;
         state.avatarGroup.add(avatarHedgehog);
       }
 
@@ -930,7 +925,7 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
       state.fillLight.intensity = THREE.MathUtils.lerp(0.56, 1.08, progress);
 
       state.sunMesh.material.emissiveIntensity = THREE.MathUtils.lerp(0.48, 1.1, progress);
-      state.sunGroup.position.y = 9.3 + Math.sin(state.frameTime * 0.22) * 0.12 - progress * 1.45;
+      state.sunGroup.position.y = 9.1 + Math.sin(state.frameTime * 0.22) * 0.1 - progress * 2.4;
       if (state.sunGlow) {
         state.sunGlow.material.opacity = THREE.MathUtils.lerp(0.4, 0.72, progress);
       }
@@ -943,28 +938,52 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
         state.scene.fog.density = THREE.MathUtils.lerp(0.022, 0.012, progress);
       }
 
-      const clampedSolved = Math.max(0, Math.min(BOARD_POINTS.length - 1, solvedRef.current));
-      const avatarPoint = state.pathPoints3D[clampedSolved];
-      const avatarGround = 0.66 + terrainHeightAt(avatarPoint.x, avatarPoint.z);
-      state.avatarGroup.position.x = THREE.MathUtils.lerp(state.avatarGroup.position.x, avatarPoint.x, delta * 4.3);
-      state.avatarGroup.position.z = THREE.MathUtils.lerp(state.avatarGroup.position.z, avatarPoint.z, delta * 4.3);
-      state.avatarGroup.position.y = avatarGround + Math.sin(state.frameTime * 1.28) * 0.02;
+      const solvedIndex = Math.max(0, Math.min(BOARD_POINTS.length - 1, solvedRef.current));
+      const pathMaxIndex = Math.max(1, state.pathPoints3D.length - 1);
+      const centerPoint = new THREE.Vector3(0, 0, 0);
+      let targetPoint = null;
+
+      if (solvedRef.current <= 0) {
+        targetPoint = centerPoint;
+      } else {
+        const totalSegments = pathMaxIndex + 1;
+        const travel = clamp01(state.progressCurrent) * totalSegments;
+        if (travel <= 1) {
+          targetPoint = new THREE.Vector3().lerpVectors(centerPoint, state.pathPoints3D[0], travel);
+        } else {
+          const pathTravel = Math.min(pathMaxIndex, travel - 1);
+          const fromIndex = Math.floor(pathTravel);
+          const toIndex = Math.min(pathMaxIndex, fromIndex + 1);
+          const t = pathTravel - fromIndex;
+          const fromPoint = state.pathPoints3D[fromIndex];
+          const toPoint = state.pathPoints3D[toIndex];
+          targetPoint = new THREE.Vector3().lerpVectors(fromPoint, toPoint, t);
+        }
+      }
+
+      if (!targetPoint) {
+        targetPoint = centerPoint;
+      }
+      const avatarGround = 0.42 + terrainHeightAt(targetPoint.x, targetPoint.z);
+      state.avatarGroup.position.x = THREE.MathUtils.lerp(state.avatarGroup.position.x, targetPoint.x, delta * 5.4);
+      state.avatarGroup.position.z = THREE.MathUtils.lerp(state.avatarGroup.position.z, targetPoint.z, delta * 5.4);
+      state.avatarGroup.position.y = avatarGround + Math.sin(state.frameTime * 1.28) * 0.005;
 
       state.milestoneNodes.forEach((node) => {
-        const solved = node.userData.index < solvedRef.current;
-        const current = node.userData.index === solvedRef.current;
+        const solved = node.userData.index < solvedIndex;
+        const current = node.userData.index === solvedIndex;
 
         if (solved) {
           node.material.color.set('#9dd78f');
           node.material.emissive.set('#3f7d43');
           node.material.emissiveIntensity = 0.6;
         } else if (current) {
-          node.material.color.set('#f5acd8');
-          node.material.emissive.set('#8a3b74');
+          node.material.color.set('#f2a8b6');
+          node.material.emissive.set('#7a1f35');
           node.material.emissiveIntensity = 0.74 + Math.sin(state.frameTime * 2.6) * 0.14;
         } else {
-          node.material.color.set('#94648f');
-          node.material.emissive.set('#4a2553');
+          node.material.color.set('#8c3f55');
+          node.material.emissive.set('#481423');
           node.material.emissiveIntensity = 0.24;
         }
       });

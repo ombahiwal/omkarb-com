@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Great+Vibes&display=swap');
 
 :root {
-  --v-bg-1: #12091f;
-  --v-bg-2: #221134;
-  --v-bg-3: #33194d;
-  --v-bg-4: #4a1f5b;
+  --v-bg-1: #18060d;
+  --v-bg-2: #2a0914;
+  --v-bg-3: #3f0d1d;
+  --v-bg-4: #5a1227;
   --v-rose-50: #ffe8f6;
   --v-rose-200: #f4bbdf;
   --v-rose-300: #e692cd;
   --v-rose-400: #cf66b6;
   --v-rose-500: #b74b9f;
-  --v-violet-300: #c29af5;
-  --v-violet-500: #8750d8;
+  --v-violet-300: #f0a7b6;
+  --v-violet-500: #a6283d;
   --v-mint-300: #a6f2a5;
   --v-mint-500: #56bd57;
   --v-paper: #f8e8f4;
@@ -35,9 +35,9 @@ body.vira-body {
   min-height: 100dvh;
   overflow: hidden;
   background:
-    radial-gradient(circle at 12% 18%, rgba(212, 104, 176, 0.34), transparent 42%),
-    radial-gradient(circle at 84% 12%, rgba(144, 95, 229, 0.32), transparent 37%),
-    radial-gradient(circle at 72% 84%, rgba(171, 84, 170, 0.22), transparent 35%),
+    radial-gradient(circle at 12% 18%, rgba(212, 104, 136, 0.34), transparent 42%),
+    radial-gradient(circle at 84% 12%, rgba(188, 60, 84, 0.32), transparent 37%),
+    radial-gradient(circle at 72% 84%, rgba(146, 36, 64, 0.22), transparent 35%),
     linear-gradient(170deg, var(--v-bg-1) 0%, var(--v-bg-2) 33%, var(--v-bg-3) 65%, var(--v-bg-4) 100%) !important;
 }
 
@@ -106,10 +106,10 @@ body.vira-body::after {
       90deg,
       rgba(228, 126, 197, 0.86) 0px,
       rgba(228, 126, 197, 0.86) 8px,
-      rgba(48, 20, 66, 0.95) 8px,
-      rgba(48, 20, 66, 0.95) 12px,
-      rgba(147, 93, 232, 0.86) 12px,
-      rgba(147, 93, 232, 0.86) 20px,
+      rgba(63, 12, 26, 0.95) 8px,
+      rgba(63, 12, 26, 0.95) 12px,
+      rgba(184, 53, 82, 0.86) 12px,
+      rgba(184, 53, 82, 0.86) 20px,
       transparent 20px,
       transparent 26px
     );
@@ -187,7 +187,7 @@ body.vira-body::after {
   place-items: center;
   font-size: 1.62rem;
   border: 1px solid rgba(250, 203, 238, 0.56);
-  background: linear-gradient(180deg, rgba(245, 188, 229, 0.34), rgba(84, 35, 103, 0.52));
+  background: linear-gradient(180deg, rgba(245, 188, 229, 0.34), rgba(94, 31, 49, 0.52));
 }
 
 .welcome-heart-between {
@@ -215,7 +215,7 @@ body.vira-body::after {
   overflow: hidden;
   border-radius: 999px;
   border: 1px solid rgba(255, 211, 244, 0.52);
-  background: linear-gradient(128deg, #cb5eab 0%, #944dd4 48%, #6d41cb 100%);
+  background: linear-gradient(128deg, #cc5a78 0%, #9c243b 48%, #6f1224 100%);
   color: #fff5fd;
   font-family: var(--v-font-accent);
   font-size: 0.9rem;
@@ -303,7 +303,7 @@ body.vira-body::after {
 .progress-bar-fill {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #f196cf 0%, #ca6bc8 50%, #8e55e6 100%);
+  background: linear-gradient(90deg, #f19bb1 0%, #cb5e7b 50%, #8f2c3f 100%);
   box-shadow: 0 0 16px rgba(216, 109, 204, 0.42);
 }
 
@@ -617,7 +617,7 @@ body.vira-body::after {
   width: min(100%, 255px);
   padding: 12px 16px;
   border-radius: 12px;
-  border: 1px solid rgba(145, 87, 153, 0.4);
+  border: 1px solid rgba(164, 78, 102, 0.4);
   font-family: var(--v-font-body);
   font-size: 0.98rem;
   text-align: center;
@@ -627,8 +627,8 @@ body.vira-body::after {
 }
 
 .puzzle-input:focus {
-  border-color: rgba(180, 106, 198, 0.62);
-  box-shadow: 0 0 0 3px rgba(207, 128, 220, 0.22);
+  border-color: rgba(183, 84, 110, 0.62);
+  box-shadow: 0 0 0 3px rgba(214, 124, 146, 0.22);
 }
 
 .puzzle-input.correct {
@@ -657,7 +657,7 @@ body.vira-body::after {
   border: none;
   background: none;
   cursor: pointer;
-  color: #7d4786;
+  color: #8d3346;
   font-family: var(--v-font-accent);
   font-size: 0.84rem;
   letter-spacing: 0.03em;
@@ -991,12 +991,34 @@ body.vira-body::after {
 .final-screen {
   position: relative;
   z-index: 2;
+  height: 100vh;
+  height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 30px 20px;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 0 16px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.final-garden-area {
+  width: min(96vw, 820px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.final-garden-area .garden-three-root {
+  width: 100%;
+  max-width: 760px;
+  max-height: 100%;
+  aspect-ratio: 1 / 1;
 }
 
 .confetti-wrapper {
@@ -1009,6 +1031,9 @@ body.vira-body::after {
 
 .final-content {
   width: min(100%, 560px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
   text-align: center;
   border-radius: 30px;
   padding: clamp(30px, 3vw, 44px) clamp(20px, 3vw, 34px);
@@ -1117,6 +1142,24 @@ body.vira-body::after {
 
 .final-replay:hover {
   filter: brightness(1.08);
+}
+
+.final-redo-mini {
+  border: 1px solid rgba(239, 183, 228, 0.32);
+  border-radius: 999px;
+  background: rgba(18, 8, 24, 0.35);
+  color: rgba(255, 214, 245, 0.84);
+  font-family: var(--v-font-accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  margin: 4px 0 14px;
+  cursor: pointer;
+}
+
+.final-redo-mini:hover {
+  filter: brightness(1.1);
 }
 
 /* Responsive */

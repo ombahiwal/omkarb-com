@@ -14,39 +14,36 @@ export default function PetalParticles() {
   const options = useMemo(
     () => ({
       fullScreen: false,
-      fpsLimit: 60,
+      fpsLimit: 40,
       particles: {
-        number: { value: 18, density: { enable: true, area: 1100 } },
-        color: { value: ['#f4c2df', '#d879bf', '#b36be3', '#f1d6ea', '#a45fbf'] },
-        shape: { type: ['circle', 'polygon'] },
+        number: { value: 28, density: { enable: true, area: 1300 } },
+        color: { value: ['#fff7b3', '#ffe98d', '#ffe4a3', '#ffd86b'] },
+        shape: { type: 'circle' },
         opacity: {
-          value: { min: 0.14, max: 0.4 },
-          animation: { enable: true, speed: 0.2, minimumValue: 0.08, sync: false },
+          value: { min: 0.15, max: 0.65 },
+          animation: { enable: true, speed: 0.55, minimumValue: 0.05, sync: false },
         },
         size: {
-          value: { min: 2.2, max: 6.2 },
-          animation: { enable: true, speed: 0.6, minimumValue: 1.6, sync: false },
+          value: { min: 1.2, max: 3.8 },
+          animation: { enable: true, speed: 0.4, minimumValue: 0.8, sync: false },
         },
         move: {
           enable: true,
-          direction: 'bottom',
-          speed: { min: 0.12, max: 0.55 },
+          direction: 'none',
+          speed: { min: 0.04, max: 0.2 },
           random: true,
           straight: false,
-          outModes: { default: 'out', top: 'none' },
-          drift: { min: -0.18, max: 0.18 },
+          outModes: { default: 'bounce' },
+          drift: { min: -0.08, max: 0.08 },
         },
-        wobble: { enable: true, distance: 5, speed: { min: 0.7, max: 1.6 } },
-        tilt: {
-          enable: true,
-          direction: 'random',
-          value: { min: 0, max: 360 },
-          animation: { enable: true, speed: 3.5, sync: false },
-        },
-        rotate: {
-          value: { min: 0, max: 360 },
-          direction: 'random',
-          animation: { enable: true, speed: 1.8, sync: false },
+        wobble: { enable: true, distance: 2.6, speed: { min: 0.2, max: 0.6 } },
+        twinkle: {
+          particles: {
+            enable: true,
+            frequency: 0.08,
+            color: '#fffde0',
+            opacity: 1,
+          },
         },
       },
       interactivity: {
@@ -63,7 +60,7 @@ export default function PetalParticles() {
 
   return (
     <Particles
-      id="falling-petals"
+      id="fireflies"
       className="petal-particles"
       options={options}
       particlesLoaded={particlesLoaded}
