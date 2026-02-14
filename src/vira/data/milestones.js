@@ -1,4 +1,7 @@
 /* ─── Milestone positions (SVG viewBox 0 0 1000 600) ────────────────────── */
+
+import { s } from "framer-motion/client";
+
 /* Convert to CSS %: x → x/10 %, y → y/6 %                                 */
 export const milestonePoints = [
   { x: 80,  y: 520 },  // Start
@@ -127,7 +130,8 @@ export const milestones = [
     'Step by step, it is becoming real.',
   ukrainianEndearment: 'Назавжди твій / твоя — Forever yours 💛',
   puzzle: {
-    type: 'blank',
+    type: 'scramble',
+    scrambled: 'SLAWYA',
     question: '"You are my _______ in every lifetime."',
     correctAnswer: 'ALWAYS',
     hint: 'Without end, without pause… 💛',
