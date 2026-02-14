@@ -42,7 +42,7 @@ export default function TimelineModal() {
             animate="visible"
             exit="exit"
           >
-            <p className="timeline-fullscreen-kicker">Milestone Unlocked</p>
+            
             <motion.h2
               className="timeline-fullscreen-title"
               initial={{ opacity: 0, y: 10 }}
@@ -60,6 +60,22 @@ export default function TimelineModal() {
             >
               {currentModalData.date}
             </motion.span>
+
+            {currentModalData.photoUrl && (
+              <motion.div
+                className="timeline-fullscreen-photo-wrap"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.52 }}
+              >
+                <img
+                  className="timeline-fullscreen-photo"
+                  src={currentModalData.photoUrl}
+                  alt={currentModalData.title}
+                  draggable="false"
+                />
+              </motion.div>
+            )}
 
             <motion.p
               className="timeline-fullscreen-description"

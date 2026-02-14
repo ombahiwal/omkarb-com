@@ -31,14 +31,22 @@ export default function WelcomeScreen() {
           🌻💛🌻
         </motion.div>
 
-        <h1 className="welcome-title">Our Eternal Sunflower Path</h1>
+        <h1 className="welcome-title">Happy Valentine&apos;s Day</h1>
+
+        <div className="welcome-hero-photo-wrap">
+          <img
+            className="welcome-hero-photo"
+            src="/assets/images/7.jpeg"
+            alt="Our memory"
+            draggable="false"
+          />
+        </div>
 
         <p className="welcome-subtitle">
-          A journey through our love story — one puzzle, one memory, one bloom at
-          a time.
+          A journey through our love story.
         </p>
 
-        <div className="welcome-avatars">
+        {/* <div className="welcome-avatars">
           <div className="welcome-avatar him">
             <span role="img" aria-label="him">🧑</span>
           </div>
@@ -52,12 +60,10 @@ export default function WelcomeScreen() {
           <div className="welcome-avatar her">
             <span role="img" aria-label="her">👩</span>
           </div>
-        </div>
+        </div> */}
 
         <p className="welcome-message">
           Every flower blooms because of you, сонечко.
-          <br />
-          Solve the puzzles, unlock our memories, and watch our garden grow. 🌻
         </p>
 
         <motion.button

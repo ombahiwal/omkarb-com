@@ -9,7 +9,6 @@ export const milestonePoints = [
   { x: 600, y: 240 },  // Milestone 5
   { x: 700, y: 185 },  // Milestone 6
   { x: 800, y: 135 },  // Milestone 7
-  { x: 920, y: 70  },  // Milestone 8 (final heart)
 ];
 
 export const toPercent = (pt) => ({
@@ -22,7 +21,7 @@ export const trailPath =
   'M 80,520 C 140,530 160,470 200,455 C 240,440 270,420 310,400 ' +
   'C 350,380 360,360 400,345 C 440,330 460,310 500,290 ' +
   'C 540,270 560,255 600,240 C 640,225 660,205 700,185 ' +
-  'C 740,165 760,150 800,135 C 850,110 890,85 920,70';
+  'C 740,165 760,150 800,135';
 
 /* ─── Milestones ────────────────────────────────────────────────────────── */
 export const milestones = [
@@ -32,9 +31,9 @@ export const milestones = [
     date: 'The Day Everything Changed',
     description:
       'Two souls, different countries, one destiny. The universe conspired beautifully when it brought us together.',
-    photoUrl: 'https://placehold.co/400x300/FFD700/333?text=🌻+How+We+Met',
+    photoUrl: '/assets/images/1.jpeg',
     flirtyMessage:
-      'From the moment I first saw you, I knew my heart had found its home. 💛',
+      'Slow burn ❤️‍🔥',
     ukrainianEndearment: 'Моє сонечко — My little sun ☀️',
     puzzle: {
       type: 'scramble',
@@ -45,126 +44,111 @@ export const milestones = [
     },
   },
   {
-    id: 2,
-    title: 'First Virtual Date',
-    date: 'When Distance Didn\'t Matter',
-    description:
-      'Hours flew by like minutes. We talked, laughed, and fell deeper — even through a screen. Distance was just a number.',
-    photoUrl: 'https://placehold.co/400x300/87CEEB/333?text=💻+First+Date',
-    flirtyMessage:
-      'I could listen to your voice forever. Every call makes my heart race like the very first time. 🥰',
-    ukrainianEndearment: 'Зірочка моя — My little star ⭐',
-    puzzle: {
-      type: 'blank',
-      question: '"Every time I hear your voice, it feels like _______."',
-      correctAnswer: 'HOME',
-      hint: 'A place where you truly belong… 🏠',
-    },
+  id: 2,
+  title: 'Our Little Adventures',
+  date: 'The Moments We Make Ours',
+  description:
+    'From tiny plans to spontaneous detours, every little adventure with you turns into a core memory. It is all about the moments we share.',
+  photoUrl: '/assets/images/2.jpeg',
+  flirtyMessage:
+    'Even the smallest moments with you feels amazing. With you, every day becomes an adventure I never want to end. 🥰',
+  ukrainianEndearment: 'Моя пригода — My adventure 💫',
+  puzzle: {
+    type: 'scramble',
+    scrambled: 'VETUANRDES',
+    question: '"With you, even ordinary days feel like _______."',
+    correctAnswer: 'ADVENTURES',
+    hint: 'Little moments, big memories… ✨',
   },
+},
+
   {
-    id: 3,
-    title: 'First "I Love You"',
-    date: 'Three Words, One Universe',
-    description:
-      'My heart was pounding. Those three words changed everything — and I\'d say them a million times again.',
-    photoUrl: 'https://placehold.co/400x300/FF6B9D/fff?text=💕+I+Love+You',
-    flirtyMessage:
-      'I love you more with every sunrise. You are my forever, my always, my everything.',
-    ukrainianEndearment: 'Кохання моє — My love 💗',
-    puzzle: {
-      type: 'scramble',
-      question: 'Unscramble this — what I want to say to you every day:',
-      scrambled: 'ROEEVRF',
-      correctAnswer: 'FOREVER',
-      hint: 'It never ends… ♾️',
-    },
+  id: 3,
+  title: 'Our Long-Distance Love',
+  date: 'Holding On Until We\'re Together',
+  description:
+    'Distance tests us, but it never weakens us. Every day apart is one day closer to finally being in each other’s arms for good.',
+  photoUrl: '/assets/images/3.jpeg',
+  flirtyMessage:
+    'No matter how far you are, my heart chooses you every single day. We’ll hang in there, and soon distance will be our old story. ❤️',
+  ukrainianEndearment: 'Сумую за тобою — I miss you 💗',
+  puzzle: {
+    type: 'scramble',
+    question: 'Unscramble this — what our love keeps giving us:',
+    scrambled: 'EPOH',
+    correctAnswer: 'HOPE',
+    hint: 'What keeps us going until reunion… ✨',
   },
+},
+{
+  id: 4,
+  title: 'I Believe In You',
+  date: 'Your Strength Inspires Me',
+  description:
+    'I see how much weight you carry with courage, and still keep moving forward with grace. Your hard work and persistence inspire me every day, and I believe in you with all my heart.',
+  photoUrl: '/assets/images/4.jpeg',
+  flirtyMessage:
+    'You turn challenges into strength. I am endlessly proud of you, and I will always stand beside you. 🌹',
+  ukrainianEndearment: 'Я вірю в тебе — I believe in you 💫',
+  puzzle: {
+    type: 'scramble',
+    question: 'What quality in you do I admire the most?',
+    scrambled: 'GROTNS',
+    correctAnswer: 'STRONG',
+    hint: 'You keep going with courage, every single day… 💪',
+    imageUrl: '/assets/images/4.jpeg',
+  },
+},
   {
-    id: 4,
-    title: 'Our Special Place',
-    date: 'Where Our Souls Danced',
-    description:
-      'That place where the world stood still and it was just us. Every cobblestone, every sunset — ours.',
-    photoUrl: 'https://placehold.co/400x300/DDA0DD/333?text=🏰+Our+Place',
-    flirtyMessage:
-      'One day we\'ll go back and I\'ll hold your hand exactly like I did the first time. 🌅',
-    ukrainianEndearment: 'Любов моя — My love 🌹',
-    puzzle: {
-      type: 'image-guess',
-      question: 'What word describes how you felt in our special place?',
-      correctAnswer: 'MAGICAL',
-      hint: 'Like a fairy tale come true… ✨',
-      imageUrl: 'https://placehold.co/400x300/E6E6FA/333?text=✨+Guess+Me',
-    },
+  id: 5,
+  title: 'Your Kisses',
+  date: 'Every Kiss, Every Time',
+  description:
+    'Your kisses still melt me the same way. They are soft, electric, and impossible to forget.',
+  photoUrl: '/assets/images/5.jpeg',
+  flirtyMessage:
+    'I keep replaying your kisses in my head. I miss them more than words can say. 💋',
+  ukrainianEndearment: 'Моє серденько — My little heart 💖',
+  puzzle: {
+    type: 'blank',
+    question: '"When you kiss me, I feel _______ in my stomach."',
+    correctAnswer: 'BUTTERFLIES',
+    hint: 'They flutter inside you… 🦋',
   },
+},
   {
-    id: 5,
-    title: 'First Kiss',
-    date: 'When Time Froze',
-    description:
-      'The world disappeared. There was only your warmth, your breath, and that perfect moment I\'ll never forget.',
-    photoUrl: 'https://placehold.co/400x300/FFB6C1/333?text=💋+First+Kiss',
-    flirtyMessage:
-      'That kiss replays in my mind on loop. I crave your lips like the flowers crave the sun. 🌻💋',
-    ukrainianEndearment: 'Моє серденько — My little heart 💖',
-    puzzle: {
-      type: 'blank',
-      question: '"When we kissed, I felt _______ in my stomach."',
-      correctAnswer: 'BUTTERFLIES',
-      hint: 'They flutter inside you… 🦋',
-    },
+  id: 6,
+  title: 'Our Future',
+  date: 'What We Are Building',
+  description:
+    'Together hand in hand, I trust in our love and the future we are creating together.',
+  photoUrl: '/assets/images/6.jpeg',
+  flirtyMessage:
+    'Step by step, it is becoming real.',
+  ukrainianEndearment: 'Назавжди твій / твоя — Forever yours 💛',
+  puzzle: {
+    type: 'blank',
+    question: '"You are my _______ in every lifetime."',
+    correctAnswer: 'ALWAYS',
+    hint: 'Without end, without pause… 💛',
   },
-  {
-    id: 6,
-    title: 'Our Inside Joke',
-    date: 'What Only We Understand',
-    description:
-      'That thing that makes us both burst out laughing when no one else gets it. Our secret language of love.',
-    photoUrl: 'https://placehold.co/400x300/98FB98/333?text=😂+Inside+Joke',
-    flirtyMessage:
-      'Your laugh is my favourite sound in the universe. I\'d cross oceans just to hear it. 😂❤️',
-    ukrainianEndearment: 'Сонечко — Little sun ☀️',
-    puzzle: {
-      type: 'scramble',
-      question: 'Unscramble — what your laugh gives me:',
-      scrambled: 'SNHIPSEAP',
-      correctAnswer: 'HAPPINESS',
-      hint: 'Pure joy… 😊',
-    },
+},
+{
+  id: 7,
+  title: 'Chai & Your Heart',
+  date: 'The Cup That Started It All',
+  description:
+    'Somewhere between warm cups and sweet moments, chai became our little love language. I smile thinking how I stole your heart with my chai.',
+  photoUrl: '/assets/images/7.jpeg',
+  flirtyMessage:
+    'Honestly, I think chai was my secret wingman ☕.',
+  ukrainianEndearment: 'Сонечко — Little sun ☀️',
+  puzzle: {
+    type: 'scramble',
+    question: 'What stole your heart:',
+    scrambled: 'AHCI',
+    correctAnswer: 'CHAI',
+    hint: 'Your favorite warm drink… ☕',
   },
-  {
-    id: 7,
-    title: 'The Night We Were Closest',
-    date: 'Two Hearts, One Beat',
-    description:
-      'Wrapped in each other, the rest of the world faded away. A memory written in starlight and whispered promises.',
-    photoUrl: 'https://placehold.co/400x300/191970/FFD700?text=🌙+Starlight',
-    flirtyMessage:
-      'Being close to you is like finding the missing piece of my soul. You complete me in ways words can\'t describe. 🌙✨',
-    ukrainianEndearment: 'Ти — моє все — You are my everything 💫',
-    puzzle: {
-      type: 'blank',
-      question: '"You are my _______ in every lifetime."',
-      correctAnswer: 'SOULMATE',
-      hint: 'Two souls meant for each other… 💫',
-    },
-  },
-  {
-    id: 8,
-    title: 'Our Future Dreams',
-    date: 'What Awaits Us',
-    description:
-      'A house with sunflowers in the garden, mornings in each other\'s arms, and a lifetime of adventures together.',
-    photoUrl: 'https://placehold.co/400x300/FFD700/333?text=🌻+Our+Future',
-    flirtyMessage:
-      'Every dream I have starts and ends with you. I can\'t wait to build our forever, one sunflower at a time. 🌻💛',
-    ukrainianEndearment: 'Назавжди твій / твоя — Forever yours 💛',
-    puzzle: {
-      type: 'scramble',
-      question: 'Unscramble — what I\'ll do with you:',
-      scrambled: 'SALWYA',
-      correctAnswer: 'ALWAYS',
-      hint: 'Without end, without pause… 💛',
-    },
-  },
+}
 ];

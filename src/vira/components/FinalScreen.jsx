@@ -1,10 +1,19 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import ConfettiExplosion from 'react-confetti-explosion';
 import useGameStore from '../store';
 import ThreeGardenBoard from './ThreeGardenBoard';
 
 const FINAL_HEART_BLOOM_TOTAL = 20;
+const PHOTO_WALL_IMAGES = [
+  '/assets/images/1.jpeg',
+  '/assets/images/2.jpeg',
+  '/assets/images/3.jpeg',
+  '/assets/images/4.jpeg',
+  '/assets/images/5.jpeg',
+  '/assets/images/6.jpeg',
+  '/assets/images/7.jpeg',
+];
 
 /* ── Staggered letter animation ── */
 function StaggerText({ text, className, delay = 0 }) {
@@ -31,7 +40,7 @@ function Countdown() {
 
   useEffect(() => {
     // Set your reunion date here
-    const target = new Date('2026-06-01T00:00:00');
+    const target = new Date('2026-07-01T00:00:00');
     const tick = () => {
       const diff = target - Date.now();
       if (diff <= 0) {
@@ -65,13 +74,59 @@ function Countdown() {
 export default function FinalScreen() {
   const [showConfetti, setShowConfetti] = useState(true);
   const [extraBloomCount, setExtraBloomCount] = useState(0);
+  const [showScrollCue, setShowScrollCue] = useState(false);
+  const [shouldPlayFinalVideo, setShouldPlayFinalVideo] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const finalVideoRef = useRef(null);
+  const hasStartedFinalVideoRef = useRef(false);
   const resetGame = useGameStore((s) => s.resetGame);
   const bloomedFlowers = useGameStore((s) => s.bloomedFlowers);
+  const scrollHostRef = useRef(null);
+  const finalLetterRef = useRef(null);
 
   useEffect(() => {
+    setShouldPlayFinalVideo(true);
     const t = setTimeout(() => setShowConfetti(false), 5000);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowScrollCue(true), 2600);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (!shouldPlayFinalVideo || !finalVideoRef.current || hasStartedFinalVideoRef.current) {
+      return undefined;
+    }
+
+    hasStartedFinalVideoRef.current = true;
+    const video = finalVideoRef.current;
+    video.currentTime = 0;
+    video.loop = false;
+    video.muted = false;
+
+    const tryPlay = async () => {
+      try {
+        await video.play();
+        setIsVideoMuted(false);
+      } catch (_error) {
+        video.muted = true;
+        try {
+          await video.play();
+          setIsVideoMuted(true);
+        } catch (_retryError) {
+          setIsVideoMuted(true);
+        }
+      }
+    };
+
+    tryPlay();
+
+    return () => {
+      video.pause();
+    };
+  }, [shouldPlayFinalVideo]);
 
   useEffect(() => {
     const remaining = Math.max(0, FINAL_HEART_BLOOM_TOTAL - bloomedFlowers.length);
@@ -109,13 +164,66 @@ export default function FinalScreen() {
     return [...bloomedFlowers, ...extras];
   }, [bloomedFlowers, extraBloomCount]);
 
+  const scrollToLetter = () => {
+    if (!scrollHostRef.current || !finalLetterRef.current) {
+      return;
+    }
+
+    scrollHostRef.current.scrollTo({
+      top: Math.max(0, finalLetterRef.current.offsetTop - 8),
+      behavior: 'smooth',
+    });
+    setShowScrollCue(false);
+  };
+
+  const toggleMute = async () => {
+    const video = finalVideoRef.current;
+    if (!video) {
+      return;
+    }
+
+    const nextMuted = !isVideoMuted;
+    video.muted = nextMuted;
+    setIsVideoMuted(nextMuted);
+
+    if (!nextMuted) {
+      try {
+        await video.play();
+      } catch (_error) {
+        video.muted = true;
+        setIsVideoMuted(true);
+      }
+    }
+  };
+
   return (
     <motion.div
+      ref={scrollHostRef}
       className="final-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2 }}
+      onScroll={(e) => {
+        if (e.currentTarget.scrollTop > 24) {
+          setShowScrollCue(false);
+        }
+      }}
     >
+      {shouldPlayFinalVideo && (
+        <div className="final-bg-video-wrap" aria-hidden="true">
+          <video
+            ref={finalVideoRef}
+            className="final-bg-video"
+            autoPlay
+            playsInline
+            preload="metadata"
+            loop={false}
+          >
+            <source src="/assets/time_in_a_bottle.mp4" type="video/mp4" />
+          </video>
+        </div>
+      )}
+
       {showConfetti && (
         <div className="confetti-wrapper">
           <ConfettiExplosion
@@ -136,79 +244,104 @@ export default function FinalScreen() {
         />
       </div>
 
-      <div className="final-content">
-        {/* Main heading */}
-        <motion.div
-          className="final-emoji-row"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 100, damping: 12, delay: 0.5 }}
-        >
-          🌻💛🌻
-        </motion.div>
+      <section ref={finalLetterRef} className="final-letter-section">
+        <div className="final-photowall" aria-hidden="true">
+          {PHOTO_WALL_IMAGES.map((src, index) => (
+            <img key={src} src={src} alt="" className="final-photowall-img" style={{ '--i': index }} />
+          ))}
+        </div>
+        <div className="final-photowall-overlay" aria-hidden="true" />
 
-        <h1 className="final-title">
-          <StaggerText text="Our garden is in full bloom." delay={1} />
-        </h1>
+        <div className="final-content">
+          {/* Main heading */}
+          <motion.div
+            className="final-emoji-row"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 100, damping: 12, delay: 0.5 }}
+          >
+          </motion.div>
 
-        <motion.div
-          className="final-letter"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 1 }}
-        >
-          <p>
-            My dearest,
-          </p>
-          <p>
-            Every puzzle you solved, every flower that bloomed — they all represent
-            a piece of our story. A story I'd choose again and again, in every
-            lifetime, in every universe.
-          </p>
-          <p>
-            Distance is just space. What we have is timeless — deeper than oceans,
-            brighter than the sunflowers we planted here together.
-          </p>
-          <p>
-            I love you more than words in any language can say. But let me try in
-            yours:
-          </p>
-          <p className="final-ukrainian">
-            Я тебе кохаю назавжди.
-          </p>
-          <p className="final-translation">
-            — I love you forever.
-          </p>
-          <p className="final-sign-off">
-            Назавжди твій / твоя 💛<br />
-            — Your Omkar
-          </p>
-        </motion.div>
+          <h1 className="final-title">
+            <StaggerText text="Our garden is in full bloom." delay={1} />
+          </h1>
 
-        <Countdown />
+          <motion.div
+            className="final-letter"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 1 }}
+          >
+            <p>
+              My dearest,
+            </p>
+            <p>
+              Every puzzle you solved, every flower that bloomed — they all represent
+              a piece of our story.
+            </p>
+            <p>
+              Distance is just space. What we have is timeless deeper than oceans,
+              brighter than the flowers we planted here together.
+            </p>
+            <p>
+              I love you more than words in any language can say, but let me try in
+              yours: 
+            </p>
+            <p className="final-translation">
+              Я тебе люблю ❤️
+            </p>
+            <p className="final-sign-off">
+              З Днем святого Валентина!<br />
+              — Your Omkar
+            </p>
+          </motion.div>
 
-        <motion.a
-          className="final-cta"
-          href="sms:"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 4 }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Text me when you finish ❤️
-        </motion.a>
-      </div>
+        </div>
+      </section>
 
-      <motion.button
-        className="final-redo-mini"
-        onClick={resetGame}
+      <motion.div
+        className="final-actions"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 4.5 }}
       >
-        Redo
-      </motion.button>
+        <button
+          className="final-audio-toggle"
+          onClick={toggleMute}
+          type="button"
+        >
+          {isVideoMuted ? 'Unmute' : 'Mute'}
+        </button>
+        <button
+          className="final-redo-mini"
+          onClick={resetGame}
+          type="button"
+        >
+          Redo
+        </button>
+      </motion.div>
+
+      {showScrollCue && (
+        <motion.div
+          className="final-scroll-cue"
+          role="button"
+          tabIndex={0}
+          onClick={scrollToLetter}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              scrollToLetter();
+            }
+          }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35 }}
+        >
+          <span className="final-scroll-cue-arrow">↓</span>
+          <span>Tap to scroll down</span>
+        </motion.div>
+      )}
     </motion.div>
   );
 }

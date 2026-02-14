@@ -635,11 +635,12 @@ const createProceduralFlower = (type, seed = 1) => {
   return flower;
 };
 
-export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMilestones }) {
+export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMilestones, onInteract }) {
   const hostRef = useRef(null);
   const sceneStateRef = useRef(null);
   const solvedRef = useRef(solvedCount);
   const [modelVersion, setModelVersion] = useState(0);
+  const hasInteractedRef = useRef(false);
 
   useEffect(() => {
     solvedRef.current = solvedCount;
@@ -681,6 +682,18 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
     controls.minAzimuthAngle = THREE.MathUtils.degToRad(-60);
     controls.maxAzimuthAngle = THREE.MathUtils.degToRad(60);
     controls.update();
+
+    const markInteracted = () => {
+      if (hasInteractedRef.current) {
+        return;
+      }
+      hasInteractedRef.current = true;
+      if (typeof onInteract === 'function') {
+        onInteract();
+      }
+    };
+    controls.addEventListener('start', markInteracted);
+    renderer.domElement.addEventListener('pointerdown', markInteracted, { passive: true });
 
     const ambient = new THREE.AmbientLight('#ffe1f1', 0.5);
     scene.add(ambient);
@@ -1020,6 +1033,8 @@ export default function ThreeGardenBoard({ bloomedFlowers, solvedCount, totalMil
 
       resizeObserver.disconnect();
       controls.dispose();
+      controls.removeEventListener('start', markInteracted);
+      renderer.domElement.removeEventListener('pointerdown', markInteracted);
 
       if (renderer.domElement.parentNode === host) {
         host.removeChild(renderer.domElement);
