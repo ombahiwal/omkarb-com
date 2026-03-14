@@ -55,6 +55,9 @@ export function Hero({ profile }) {
           <a className="button-link" href={profile.links.cv} target="_blank" rel="noopener noreferrer">
             Download CV
           </a>
+          <a className="button-link button-link--ghost" href={profile.links.email}>
+            Email
+          </a>
           <a className="button-link button-link--ghost" href={profile.links.github} target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
@@ -145,7 +148,8 @@ Hero.propTypes = {
     ).isRequired,
     links: PropTypes.shape({
       github: PropTypes.string.isRequired,
-      cv: PropTypes.string.isRequired
+      cv: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired
     }).isRequired
   }).isRequired
 };

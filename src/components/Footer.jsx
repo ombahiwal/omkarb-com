@@ -7,6 +7,12 @@ export function Footer({ profile }) {
 
       <div className="linked-search">
         <span className="search-cursor" aria-hidden="true" />
+        <a className="list-node" href={profile.links.email}>
+          Email
+        </a>
+        <span className="list-arrow" aria-hidden="true">
+          →
+        </span>
         <a className="list-node" href={profile.links.github} target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
@@ -36,7 +42,8 @@ Footer.propTypes = {
   profile: PropTypes.shape({
     links: PropTypes.shape({
       github: PropTypes.string.isRequired,
-      cv: PropTypes.string.isRequired
+      cv: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired
     }).isRequired
   }).isRequired
 };

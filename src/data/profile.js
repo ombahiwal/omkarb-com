@@ -1,22 +1,24 @@
 export const profile = {
   name: 'Omkar Sanjay Bahiwal',
-  headline: 'Full-stack engineer delivering cloud, data, and IoT systems from research prototypes to production.',
-  location: 'Lausanne, Switzerland',
+  headline: 'Full-stack engineer building analytics, data, and IoT products from research prototypes to production systems.',
+  location: 'Bern, Switzerland',
   links: {
     github: 'https://github.com/ombahiwal',
-    cv: '/documents/Omkar_Bahiwal_CV.pdf'
+    cv: '/documents/Omkar_Bahiwal_CV.pdf',
+    email: 'mailto:ombahiwal@gmail.com'
   },
   summary: [
     'Engineer translating academic research into production-ready products across Europe, India, and Uganda.',
-    'Current focus: IoT interfaces, master-data systems, and full-stack platforms delivered with rigorous execution.'
+    'Current focus: operational analytics, IoT interfaces, data quality systems, and full-stack product execution.'
   ],
   domains: [
     'Full Stack Development',
     'Machine Learning',
     'Cloud & DevOps',
     'IoT Interfaces',
+    'Data Management',
     'Data Visualization',
-    'Product Strategy'
+    'Agentic AI'
   ],
   metrics: [
     { label: 'Years Building', value: '8+' },
@@ -26,11 +28,19 @@ export const profile = {
   languages: [
     { label: 'English', level: 'Proficient' },
     { label: 'Hindi', level: 'Proficient' },
-    { label: 'French', level: 'B2' },
-    { label: 'German', level: 'B1' }
+    { label: 'German', level: 'B2' },
+    { label: 'French', level: 'B2' }
   ],
-  programming: ['Python', 'TypeScript', 'Go', 'C++', 'Swift', 'Kotlin', 'C#', 'Solidity', 'PHP', 'Dart'],
+  programming: ['C++', 'Python', 'TypeScript', 'Dart', 'Go', 'Java', 'C#', 'Swift', 'Kotlin', 'PHP', 'Solidity'],
   experience: [
+    {
+      role: 'Master Thesis Student (full-time)',
+      company: 'SBB AG',
+      location: 'Bern, Switzerland',
+      period: 'Mar 2026 - Present',
+      keywords: ['Dashboards', 'Data Quality', 'Visualization Design', 'ROI'],
+      impact: 'Improving SBB operational analytics through dashboard design studies focused on data quality, reporting clarity, and ROI.'
+    },
     {
       role: 'Research Assistant Student (part-time / HiWi)',
       company: 'VIS(US), University of Stuttgart',
@@ -115,24 +125,16 @@ export const profile = {
       role: 'Local Community Initiatives (self-employment)',
       company: 'AWS, MIT Group',
       location: 'New Delhi, India',
-      period: 'Aug 2018 - Oct 2018',
-      keywords: ['Cloud', 'ML', 'Node.js', 'Telemedicine'],
-      impact: 'Built community projects in cloud, ML, and Node.js including traffic-control and telemedicine solutions.'
-    },
-    {
-      role: 'Software Developer (self-employment)',
-      company: 'Tedtech LLP',
-      location: 'Mumbai, India',
-      period: 'Jul - Jun',
-      keywords: ['AWS', 'LAPP', 'Freelancing Platform'],
-      impact: 'Built the Tedtech freelancing platform using AWS and LAPP components.'
+      period: 'Jun 2018 - Oct 2018',
+      keywords: ['Cloud', 'ML', 'Node.js', 'Telemedicine', 'Tedtech'],
+      impact: 'Built community projects in cloud, ML, and Node.js, including traffic-control, telemedicine, and the Tedtech freelancing platform.'
     }
   ],
   education: [
     {
       title: 'M.Sc. Computer Science · Service Technology & Engineering',
       school: 'University of Stuttgart',
-      period: '2022 - Present',
+      period: '2022 - 2026',
       highlights: ['Exchange at EPFL (Winter 2025-2026)', 'Exchange at INSA Lyon (Summer 2023)']
     },
     {
@@ -168,16 +170,19 @@ export const profile = {
     {
       group: 'Aether Swiss Kite · EPFL',
       role: 'Communications Team',
-      contribution: 'Leading end-to-end web redesign and communications system refresh for the team (2025 - Present).'
+      period: 'Sep 2025 - Feb 2026',
+      contribution: 'Delivered the complete website redesign project and refreshed the team communication presence.'
     },
     {
       group: 'AKULA Ukrainian Association · EPFL',
       role: 'IT Manager',
+      period: 'Aug 2024 - Jul 2025',
       contribution: 'Owned web design, UI/UX direction, and visual-system updates for humanitarian initiatives (2024 - 2025).'
     },
     {
       group: 'STUVUS / FIUS · University of Stuttgart',
       role: 'Event Organizer',
+      period: '2019',
       contribution: 'Organized technical events, hack sessions, and student-led research demo nights.'
     },
     {

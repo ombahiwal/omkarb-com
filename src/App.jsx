@@ -302,15 +302,11 @@ export default function App() {
           <Awards items={profile.awards} />
         </Section>
 
-        <Section className="span-4" index="05" title="Communities" meta="Builder-led student initiatives">
+        <Section className="span-6" index="05" title="Communities" meta="Builder-led student initiatives">
           <Associations items={profile.associations} />
         </Section>
-        <Section className="span-8" index="" title="" meta="contact">
-          <Footer profile={profile} />
-        </Section>
-        {/* <div className="span-12">
-          <Footer profile={profile} />
-        </div> */}
+
+        <Footer profile={profile} />
       </div>
     </div>
   );
