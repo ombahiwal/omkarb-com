@@ -4,7 +4,7 @@ export const profile = {
   location: 'Bern, Switzerland',
   links: {
     github: 'https://github.com/ombahiwal',
-    cv: '/documents/Omkar_Bahiwal_CV.pdf',
+    cv: '/documents/CV_DE_25_02_26.pdf',
     email: 'mailto:ombahiwal@gmail.com'
   },
   summary: [

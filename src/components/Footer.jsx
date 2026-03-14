@@ -19,7 +19,7 @@ export function Footer({ profile }) {
         <span className="list-arrow" aria-hidden="true">
           →
         </span>
-        <a className="list-node" href={profile.links.cv} target="_blank" rel="noopener noreferrer">
+        <a className="list-node" href={profile.links.cv} target="_blank" rel="noopener noreferrer" download>
           CV
         </a>
         <span className="list-arrow" aria-hidden="true">

@@ -52,7 +52,7 @@ export function Hero({ profile }) {
         </div>
 
         <div className="hero-actions js-stagger">
-          <a className="button-link" href={profile.links.cv} target="_blank" rel="noopener noreferrer">
+          <a className="button-link" href={profile.links.cv} target="_blank" rel="noopener noreferrer" download>
             Download CV
           </a>
           <a className="button-link button-link--ghost" href={profile.links.email}>
