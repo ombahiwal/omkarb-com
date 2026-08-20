@@ -18,7 +18,6 @@ export default function App() {
 
   useLayoutEffect(() => {
     let cleanupFooterAnimation = () => {};
-    let cleanupMasonry = () => {};
 
     const ctx = gsap.context(() => {
       gsap.from('.js-stagger', {
@@ -86,22 +85,22 @@ export default function App() {
       tspTl
         .set('.route-edge--initial', {
           autoAlpha: 0.62,
-          stroke: 'rgba(224, 220, 208, 0.75)',
+          stroke: 'rgba(0, 0, 0, 0.55)',
           strokeWidth: 0.32
         })
         .set('.route-edge--optimized', {
           autoAlpha: 0,
-          stroke: '#f04d31',
+          stroke: '#00d76f',
           strokeWidth: 0.9,
           strokeDashoffset: 22
         })
         .set('.tsp-city', {
           scale: 1,
-          fill: '#d7d2c7',
+          fill: '#050505',
           transformOrigin: '50% 50%'
         })
         .to('.route-edge--removed', {
-          stroke: '#f04d31',
+          stroke: '#00d76f',
           autoAlpha: 0.95,
           strokeWidth: 0.88,
           duration: 0.38,
@@ -135,7 +134,7 @@ export default function App() {
         .to(
           '.route-edge--added',
           {
-            stroke: '#f04d31',
+            stroke: '#00d76f',
             strokeWidth: 0.9,
             duration: 0.26,
             stagger: 0.05,
@@ -147,7 +146,7 @@ export default function App() {
           '.tsp-city',
           {
             scale: 1.45,
-            fill: '#f04d31',
+            fill: '#00d76f',
             duration: 0.16,
             yoyo: true,
             repeat: 1,
@@ -170,10 +169,10 @@ export default function App() {
         let linkedTl;
 
         const resetNodeStyle = {
-          autoAlpha: 0.56,
-          borderColor: 'rgba(255, 255, 255, 0.08)',
-          backgroundColor: 'rgba(16, 16, 14, 0.92)',
-          color: '#cbc7be'
+          autoAlpha: 1,
+          borderColor: 'rgba(0, 0, 0, 1)',
+          backgroundColor: 'rgba(249, 234, 220, 1)',
+          color: '#050505'
         };
 
         const getCursorTarget = (node) => {
@@ -209,9 +208,9 @@ export default function App() {
                 node,
                 {
                   autoAlpha: 1,
-                  borderColor: 'rgba(240, 77, 49, 0.86)',
-                  backgroundColor: 'rgba(240, 77, 49, 0.18)',
-                  color: '#f3eee4',
+                  borderColor: 'rgba(0, 0, 0, 1)',
+                  backgroundColor: '#00d76f',
+                  color: '#050505',
                   duration: 0.2
                 },
                 '<'
@@ -232,51 +231,8 @@ export default function App() {
       }
     }, shellRef);
 
-    const grid = shellRef.current?.querySelector('.layout-grid');
-    const gridItems = grid ? Array.from(grid.children) : [];
-
-    if (grid && gridItems.length > 0) {
-      const relayoutMasonry = () => {
-        if (!window.matchMedia('(min-width: 1081px)').matches) {
-          gridItems.forEach((item) => {
-            item.style.gridRowEnd = 'auto';
-          });
-          return;
-        }
-
-        const gridStyles = window.getComputedStyle(grid);
-        const autoRow = Number.parseFloat(gridStyles.getPropertyValue('grid-auto-rows')) || 8;
-        const rowGap = Number.parseFloat(gridStyles.getPropertyValue('row-gap')) || 16;
-
-        gridItems.forEach((item) => {
-          item.style.gridRowEnd = 'auto';
-        });
-
-        gridItems.forEach((item) => {
-          const height = item.getBoundingClientRect().height;
-          const span = Math.ceil((height + rowGap) / (autoRow + rowGap));
-          item.style.gridRowEnd = `span ${Math.max(1, span)}`;
-        });
-      };
-
-      relayoutMasonry();
-      const resizeObserver = new ResizeObserver(() => {
-        requestAnimationFrame(relayoutMasonry);
-      });
-      gridItems.forEach((item) => resizeObserver.observe(item));
-      window.addEventListener('resize', relayoutMasonry);
-      const delayedRelayout = window.setTimeout(relayoutMasonry, 220);
-
-      cleanupMasonry = () => {
-        window.clearTimeout(delayedRelayout);
-        resizeObserver.disconnect();
-        window.removeEventListener('resize', relayoutMasonry);
-      };
-    }
-
     return () => {
       cleanupFooterAnimation();
-      cleanupMasonry();
       ctx.revert();
     };
   }, []);
@@ -286,23 +242,23 @@ export default function App() {
       <div className="layout-grid">
         <Hero profile={profile} />
 
-        <Section className="span-8 section-experience" index="01" title="Experience" meta="Research, product, and system delivery across Europe + India">
+        <Section id="experience" className="span-12 section-experience" index="01" title="Experience" meta="Research, product, and system delivery across Europe + India">
           <Timeline items={profile.experience} />
         </Section>
 
-        <Section className="span-4" index="02" title="Stacks" meta="Tools I ship with">
+        <Section id="stacks" className="span-6" index="02" title="Stacks" meta="Tools I ship with">
           <Stacks programming={profile.programming} languages={profile.languages} />
         </Section>
 
-        <Section className="span-4" index="03" title="Education" meta="Computer science, service systems, and exchange research">
+        <Section id="education" className="span-6" index="03" title="Education" meta="Computer science, service systems, and exchange research">
           <Education items={profile.education} />
         </Section>
 
-        <Section className="span-4" index="04" title="Awards" meta="National-stage recognition">
+        <Section id="awards" className="span-6" index="04" title="Awards" meta="National-stage recognition">
           <Awards items={profile.awards} />
         </Section>
 
-        <Section className="span-6" index="05" title="Communities" meta="Builder-led student initiatives">
+        <Section id="communities" className="span-6" index="05" title="Communities" meta="Builder-led student initiatives">
           <Associations items={profile.associations} />
         </Section>
 

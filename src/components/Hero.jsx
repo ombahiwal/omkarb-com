@@ -38,8 +38,22 @@ export function Hero({ profile }) {
 
   return (
     <header className="hero js-reveal" id="top">
+      <div className="hero-nav js-stagger">
+        <a className="site-mark" href="#top" aria-label="Omkar Bahiwal, home">
+          OB
+        </a>
+        <nav className="site-nav" aria-label="Primary navigation">
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+
       <div className="hero-copy">
-        <p className="hero-kicker js-stagger">Portfolio / 2026</p>
+        <div className="hero-kicker js-stagger">
+          <span>Portfolio / 2026</span>
+          <span>Full-stack engineering</span>
+        </div>
         <h1 className="hero-title js-stagger">{profile.name}</h1>
         <p className="hero-lede js-stagger">{profile.headline}</p>
 
@@ -65,7 +79,10 @@ export function Hero({ profile }) {
       </div>
 
       <div className="hero-side js-stagger">
-        <p className="hero-location">{profile.location}</p>
+        <div className="hero-side-heading">
+          <p className="hero-location">{profile.location}</p>
+          <span className="hero-counter">01 / 05</span>
+        </div>
 
         <div className="badge-row hero-badges">
           {profile.domains.map((domain) => (
@@ -85,6 +102,7 @@ export function Hero({ profile }) {
         </ul>
 
         <div className="hero-signal" aria-hidden="true">
+          <span className="signal-label">System map / optimized route</span>
           <svg viewBox="0 0 100 80" role="presentation">
             {initialEdges.map((edge, index) => {
               const from = tspCities[edge.from];

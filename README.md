@@ -1,6 +1,6 @@
 # Omkar Bahiwal — Portfolio
 
-A programmer-styled portfolio built with Vite + React, tailored for Netlify deployments and populated with CV-driven content.
+A Swiss-modernist portfolio built with Vite + React, tailored for Netlify deployments and populated with CV-driven content.
 
 ## 🚀 Quickstart
 
@@ -15,7 +15,8 @@ Open `http://localhost:5173` and iterate.
 
 - Vite + React 18
 - PropTypes for runtime prop contracts
-- Custom CSS grid with programmable neon aesthetic
+- Custom CSS grid inspired by Extraset's Klarheit Grotesk specimen system
+- Self-hosted ES Klarheit Grotesk and Grotesk Mono font files
 
 ## 📦 Deploying to Netlify
 
@@ -30,6 +31,10 @@ Open `http://localhost:5173` and iterate.
 - `public/documents/Omkar_Bahiwal_CV.pdf` — downloadable CV asset.
 
 Feel free to extend sections or wire a CMS by swapping `profile.js` with an API call.
+
+## Font License
+
+The ES Klarheit files in `public/fonts/` are trial files licensed for personal use. The accompanying terms are stored at `public/fonts/LICENSE.txt`; replace them with appropriately licensed production webfonts before commercial use.
 
 ## 📣 Social Sharing
 

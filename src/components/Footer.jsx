@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 
 export function Footer({ profile }) {
   return (
-    <footer className="footer">
-      <h2 className="footer-title">Get in Touch</h2>
+    <footer className="footer" id="contact">
+      <h2 className="footer-title">Let&rsquo;s make something clear.</h2>
 
       <div className="linked-search">
         <span className="search-cursor" aria-hidden="true" />
